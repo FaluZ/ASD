@@ -19,6 +19,7 @@
                         <th>Monto Total</th>
                         <th>status</th>
                         <th>Categoria</th>
+                        <th>Genero</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                     </tr>
@@ -35,6 +36,7 @@
                         <td>{{producto[6]}}</td>
                         <td>{{producto[7]}}</td>
                         <td>{{producto[8]}}</td>
+                        <td>{{producto[9]}}</td>
                         <td>
                             {# Pasar el id (lo que hay en alumno[0] #}
                             <a href="{{url_for('editar_producto', id=producto[0])}}" class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i></a>

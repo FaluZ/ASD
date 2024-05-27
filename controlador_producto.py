@@ -1,10 +1,10 @@
 from database.bd_goldenstore import obtener_conexion
 
-def insertar_producto(ruta_imagen_db, nombreProducto, descripcion, talla, monto,descuento,monto_total,status, id_Categoria):
+def insertar_producto(ruta_imagen_db, nombreProducto, descripcion, talla, monto,descuento,monto_total,status, genero,id_Categoria):
     conexion = obtener_conexion()
     with conexion.cursor() as cursor:
-        cursor.execute("INSERT INTO producto(imagen, nombreProducto, descripcion, talla, monto, descuento,monto_total,status,id_Categoria) VALUES (%s,%s,%s, %s, %s, %s, %s, %s, %s)",
-                       (ruta_imagen_db, nombreProducto, descripcion, talla, monto,descuento,monto_total,status, id_Categoria))
+        cursor.execute("INSERT INTO producto(imagen, nombreProducto, descripcion, talla, monto, descuento,monto_total,status,genero,id_Categoria) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s)",
+                       (ruta_imagen_db, nombreProducto, descripcion, talla, monto,descuento,monto_total,status,genero ,id_Categoria))
     conexion.commit()
     conexion.close()
 
@@ -22,7 +22,7 @@ def obtener_producto():
     conexion = obtener_conexion()
     usuarios = []
     with conexion.cursor() as cursor:
-        cursor.execute("SELECT id_Producto, nombreProducto, descripcion, talla, monto, descuento,monto_total,status,id_Categoria  FROM Producto")
+        cursor.execute("SELECT id_Producto, nombreProducto, descripcion, talla, monto, descuento,monto_total,status,genero,id_Categoria  FROM Producto")
         usuarios = cursor.fetchall()
     conexion.close()
     return usuarios
@@ -39,37 +39,51 @@ def obtener_producto_por_id(id):
     juego = None
     with conexion.cursor() as cursor:
         cursor.execute(
-            "SELECT id_Producto, imagen, nombreProducto, descripcion, talla, monto, descuento,monto_total,status,id_Categoria  FROM Producto WHERE id_Producto = %s", (id,))
+            "SELECT id_Producto, imagen, nombreProducto, descripcion, talla, monto, descuento,monto_total,status,genero,id_Categoria  FROM Producto WHERE id_Producto = %s", (id,))
         juego = cursor.fetchone()
     conexion.close()
     print(juego)
     return juego
 
-def actualizar_producto(imagen, nombreProducto, descripcion, talla, monto,descuento,monto_total,status, id_Categoria, id):
+def actualizar_producto(imagen, nombreProducto, descripcion, talla, monto,descuento,monto_total,status, genero,id_Categoria, id):
     conexion = obtener_conexion()
     with conexion.cursor() as cursor:
-        cursor.execute("UPDATE Producto SET imagen= %s, nombreProducto = %s, descripcion= %s, talla= %s, monto= %s,descuento= %s,monto_total= %s,status= %s,id_Categoria = %s WHERE id_Producto = %s",
-                       (imagen, nombreProducto, descripcion, talla, monto,descuento,monto_total,status, id_Categoria, id))
+        cursor.execute("UPDATE Producto SET imagen= %s, nombreProducto = %s, descripcion= %s, talla= %s, monto= %s,descuento= %s,monto_total= %s,status= %s,genero = %s,id_Categoria = %s WHERE id_Producto = %s",
+                       (imagen, nombreProducto, descripcion, talla, monto,descuento,monto_total,status, genero,id_Categoria, id))
     conexion.commit()
     conexion.close()
 
 # Función para obtener todos los productos y enviarlos a la plantilla hombre.html
-def obtener_productos():
+def obtener_productoshombre():
     conexion = obtener_conexion()
     productos = []
     with conexion.cursor() as cursor:
-        cursor.execute("SELECT id_Producto, imagen, nombreProducto, descripcion, talla, monto, descuento, monto_total, status, id_Categoria FROM Producto")
+        cursor.execute("SELECT id_Producto, imagen, nombreProducto, descripcion, talla, monto, descuento, monto_total, status, genero,id_Categoria FROM Producto WHERE genero = 'MASCULINO'")
         productos = cursor.fetchall()
     conexion.close()
     print(productos)
     return productos
+
+# Función para obtener todos los productos y enviarlos a la plantilla mujer.html
+def obtener_productosmujer():
+    conexion = obtener_conexion()
+    productos = []
+    with conexion.cursor() as cursor:
+        cursor.execute("SELECT id_Producto, imagen, nombreProducto, descripcion, talla, monto, descuento, monto_total, status, genero,id_Categoria FROM Producto WHERE genero = 'FEMENINO'")
+        productos = cursor.fetchall()
+    conexion.close()
+    print(productos)
+    return productos
+
+
+
 
 # Función para obtener un producto por su id
 def obtener_producto_por_id(id):
     conexion = obtener_conexion()
     producto = None
     with conexion.cursor() as cursor:
-        cursor.execute("SELECT id_Producto, imagen, nombreProducto, descripcion, talla, monto, descuento, monto_total, status, id_Categoria FROM Producto WHERE id_Producto = %s", (id,))
+        cursor.execute("SELECT id_Producto, imagen, nombreProducto, descripcion, talla, monto, descuento, monto_total, status, genero,id_Categoria FROM Producto WHERE id_Producto = %s", (id,))
         producto = cursor.fetchone()
     conexion.close()
     return producto

@@ -18,14 +18,16 @@ CREATE TABLE `producto` (
 	`monto_total` DECIMAL(9,2) NOT NULL,
 	`status` TINYINT(4) NOT NULL,
 	`id_Categoria` INT(11) NOT NULL,
+	`genero` CHAR(10) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
 	PRIMARY KEY (`id_Producto`) USING BTREE,
 	INDEX `FKProducto105040` (`id_Categoria`) USING BTREE,
 	CONSTRAINT `FKProducto105040` FOREIGN KEY (`id_Categoria`) REFERENCES `categoria` (`id_Categoria`) ON UPDATE RESTRICT ON DELETE RESTRICT
 )
 COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
-AUTO_INCREMENT=16
+AUTO_INCREMENT=17
 ;
+
 
 CREATE TABLE `tipo_documento` (
 	`id_TipoDocumento` BIGINT(20) NOT NULL AUTO_INCREMENT,

@@ -21,7 +21,8 @@ def index():
 
 @app.route('/mujer')
 def mujer():
-    return render_template('mujer.html')
+    productos = controlador_producto.obtener_productosmujer()
+    return render_template('hombre.html', productos=productos)
 
 
 @app.route('/carro_compra')
@@ -41,7 +42,7 @@ def contactos():
 
 @app.route('/hombre')
 def hombre():
-    productos = controlador_producto.obtener_productos()
+    productos = controlador_producto.obtener_productoshombre()
     return render_template('hombre.html', productos=productos)
 
 
@@ -194,9 +195,10 @@ def guardar_producto():
     descuento = request.form.get("descuento", "0")
     monto_total = request.form.get("monto_total", "0")
     status = request.form.get("status", "activo")  
+    genero = request.form.get("genero", "")
     id_Categoria = request.form.get("id_Categoria", "1")  
 
-    controlador_producto.insertar_producto(ruta_imagen_db, nombreProducto, descripcion, talla, monto, descuento, monto_total, status, id_Categoria)
+    controlador_producto.insertar_producto(ruta_imagen_db, nombreProducto, descripcion, talla, monto, descuento, monto_total, status,genero ,id_Categoria)
 
     return redirect(url_for('productos'))
 
