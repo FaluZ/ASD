@@ -223,7 +223,6 @@ def eliminar_producto():
     controlador_producto.eliminar_producto(request.form["id"])
     return redirect("/productos")
 
-
 @app.route("/formulario_editar_producto/<int:id>")
 def editar_producto(id):
     # Obtener el usuario por ID
